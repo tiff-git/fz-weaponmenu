@@ -116,25 +116,25 @@ Config.Weapons = {
 }
 
 Config.Ammo = {
-    { title = '.22 Long Rifle', id = 'ammo-22', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-22' }, icon = 'fas fa-bullet', description = 'Works on: .22 Caliber Weapons' },
-    { title = '.38 LC', id = 'ammo-38', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-38' }, icon = 'fas fa-bullet', description = 'Works on: .38 Caliber Weapons' },
-    { title = '.44 Magnum', id = 'ammo-44', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-44' }, icon = 'fas fa-bullet', description = 'Works on: .44 Caliber Weapons' },
-    { title = '.45 ACP', id = 'ammo-45', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-45' }, icon = 'fas fa-bullet', description = 'Works on: .45 Caliber Weapons' },
-    { title = '.50 AE', id = 'ammo-50', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-50' }, icon = 'fas fa-bullet', description = 'Works on: .50 Caliber Weapons' },
-    { title = '9mm', id = 'ammo-9', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-9' }, icon = 'fas fa-bullet', description = 'Works on: 9mm Caliber Weapons' },
-    { title = 'Firework', id = 'ammo-firework', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-firework' }, icon = 'fas fa-firework', description = 'Works on: Firework Launchers' },
-    { title = 'Flare round', id = 'ammo-flare', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-flare' }, icon = 'fas fa-flare', description = 'Works on: Flare Guns' },
-    { title = '40mm Explosive', id = 'ammo-grenade', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-grenade' }, icon = 'fas fa-bomb', description = 'Works on: Grenade Launchers' },
-    { title = '.50 BMG', id = 'ammo-heavysniper', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-heavysniper' }, icon = 'fas fa-bullet', description = 'Works on: Heavy Sniper Rifles' },
-    { title = 'Laser charge', id = 'ammo-laser', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-laser' }, icon = 'fas fa-bolt', description = 'Works on: Laser Weapons' },
-    { title = '.50 Ball', id = 'ammo-musket', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-musket' }, icon = 'fas fa-bullet', description = 'Works on: Muskets' },
-    { title = 'Railgun charge', id = 'ammo-railgun', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-railgun' }, icon = 'fas fa-bolt', description = 'Works on: Railguns' },
-    { title = '5.56x45', id = 'ammo-rifle', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-rifle' }, icon = 'fas fa-bullet', description = 'Works on: 5.56x45mm Rifles' },
-    { title = '7.62x39', id = 'ammo-rifle2', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-rifle2' }, icon = 'fas fa-bullet', description = 'Works on: 7.62x39mm Rifles' },
-    { title = 'Rocket', id = 'ammo-rocket', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-rocket' }, icon = 'fas fa-rocket', description = 'Works on: Rocket Launchers' },
-    { title = '12 Gauge', id = 'ammo-shotgun', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-shotgun' }, icon = 'fas fa-bullet', description = 'Works on: Shotguns' },
-    { title = '7.62x51', id = 'ammo-sniper', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-sniper' }, icon = 'fas fa-bullet', description = 'Works on: Sniper Rifles' },
-    { title = 'EMP round', id = 'ammo-emp', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-emp' }, icon = 'fas fa-bolt', description = 'Works on: EMP Weapons' }
+    { title = '.22 Long Rifle', id = 'ammo-22', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-22' }, description = 'Works on: .22 Caliber Weapons' },
+    { title = '.38 LC', id = 'ammo-38', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-38' }, description = 'Works on: .38 Caliber Weapons' },
+    { title = '.44 Magnum', id = 'ammo-44', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-44' }, description = 'Works on: .44 Caliber Weapons' },
+    { title = '.45 ACP', id = 'ammo-45', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-45' }, description = 'Works on: .45 Caliber Weapons' },
+    { title = '.50 AE', id = 'ammo-50', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-50' }, description = 'Works on: .50 Caliber Weapons' },
+    { title = '9mm', id = 'ammo-9', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-9' }, description = 'Works on: 9mm Caliber Weapons' },
+    { title = 'Firework', id = 'ammo-firework', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-firework' }, description = 'Works on: Firework Launchers' },
+    { title = 'Flare round', id = 'ammo-flare', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-flare' }, description = 'Works on: Flare Guns' },
+    { title = '40mm Explosive', id = 'ammo-grenade', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-grenade' }, description = 'Works on: Grenade Launchers' },
+    { title = '.50 BMG', id = 'ammo-heavysniper', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-heavysniper' }, description = 'Works on: Heavy Sniper Rifles' },
+    { title = 'Laser charge', id = 'ammo-laser', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-laser' }, description = 'Works on: Laser Weapons' },
+    { title = '.50 Ball', id = 'ammo-musket', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-musket' }, description = 'Works on: Muskets' },
+    { title = 'Railgun charge', id = 'ammo-railgun', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-railgun' }, description = 'Works on: Railguns' },
+    { title = '5.56x45', id = 'ammo-rifle', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-rifle' }, description = 'Works on: 5.56x45mm Rifles' },
+    { title = '7.62x39', id = 'ammo-rifle2', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-rifle2' }, description = 'Works on: 7.62x39mm Rifles' },
+    { title = 'Rocket', id = 'ammo-rocket', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-rocket' }, description = 'Works on: Rocket Launchers' },
+    { title = '12 Gauge', id = 'ammo-shotgun', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-shotgun' }, description = 'Works on: Shotguns' },
+    { title = '7.62x51', id = 'ammo-sniper', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-sniper' }, description = 'Works on: Sniper Rifles' },
+    { title = 'EMP round', id = 'ammo-emp', event = 'ali-weaponmenu:selectAmmo', args = { 'ammo-emp' }, description = 'Works on: EMP Weapons' }
 }
 
 Config.Components = {
@@ -172,8 +172,7 @@ Config.Components = {
     { title = 'Bell Muzzle', id = 'at_muzzle_bell', event = 'ali-weaponmenu:selectComponent', args = { 'at_muzzle_bell' }, icon = 'fas fa-bolt', description = 'Reduces recoil. Works on: Rifles' }
 }
                                                                    
-
 Config.Modifications = {
-    { title = 'Infinite Ammo', id = 'infinite_ammo', event = 'ali-weaponmenu:selectModification', args = { 'infinite_ammo' }, icon = 'fas fa-infinity' }
+    { title = 'Infinite Ammo - WIP dont use', id = 'infinite_ammo', event = 'ali-weaponmenu:selectModification', args = { 'infinite_ammo' }, icon = 'fas fa-infinity' }
 }
 
