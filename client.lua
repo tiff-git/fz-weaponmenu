@@ -35,6 +35,10 @@ local function fetchWeaponData()
     return categorizedWeapons
 end
 
+local function playFrontendSound()
+    PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", true)
+end
+
 local function openWeaponMenu()
     local weaponData = fetchWeaponData()
 
@@ -59,9 +63,9 @@ local function openWeaponMenu()
                 icon = 'fas fa-tools'
             },
             {
-                title = 'Skins',
-                menu = 'skin_menu',
-                icon = 'fas fa-paint-brush'
+                title = 'Ammo',
+                menu = 'ammo_menu',
+                icon = 'fas fa-boxes'
             }
         }
     })
@@ -221,12 +225,12 @@ local function openWeaponMenu()
         options = Config.Modifications
     })
 
-    -- Register the skin menu context
+    -- Register the ammo menu context
     lib.registerContext({
-        id = 'skin_menu',
-        title = 'Weapon Skins',
+        id = 'ammo_menu',
+        title = 'Ammo',
         menu = 'weapon_menu',
-        options = Config.Skins
+        options = Config.Ammo
     })
 
     lib.showContext('weapon_menu')
@@ -237,6 +241,9 @@ RegisterNetEvent('ali-weaponmenu:selectWeapon', function(args)
     local weaponId = args[1]
     print("Weapon selected: " .. weaponId) -- Debug statement
     TriggerServerEvent('ali-weaponmenu:giveWeapon', weaponId)
+    playFrontendSound()
+    -- Keep the menu open
+    lib.showContext('weapon_subcategories')
 end)
 
 -- Handle component selection
@@ -252,6 +259,9 @@ RegisterNetEvent('ali-weaponmenu:selectComponent', function(args)
     else
         QBCore.Functions.Notify('No weapon selected', 'error')
     end
+    playFrontendSound()
+    -- Keep the menu open
+    lib.showContext('component_menu')
 end)
 
 -- Handle modification selection
@@ -262,90 +272,26 @@ RegisterNetEvent('ali-weaponmenu:selectModification', function(args)
     
     if currentWeapon then
         print("Modification selected: " .. modificationId .. " for weapon: " .. currentWeapon) -- Debug statement
-        TriggerServerEvent('ali-weaponmenu:applyModification', currentWeapon, modificationId)
+        if modificationId == 'infinite_ammo' then
+            SetPedInfiniteAmmoClip(playerPed, true)
+            QBCore.Functions.Notify('Modification applied: ' .. modificationId, 'success')
+        end
     else
-        print("No weapon in hand") -- Debug statement
+        QBCore.Functions.Notify('No weapon in hand', 'error')
     end
+    playFrontendSound()
+    lib.showContext('modification_menu')
 end)
 
--- Apply infinite ammo
-RegisterNetEvent('ali-weaponmenu:applyInfiniteAmmo', function(currentWeapon, enable)
-    local playerPed = PlayerPedId()
-    if enable then
-        SetPedInfiniteAmmo(playerPed, true, currentWeapon)
-    else
-        SetPedInfiniteAmmo(playerPed, false, currentWeapon)
-    end
-end)
-
--- Apply reduced recoil
-RegisterNetEvent('ali-weaponmenu:applyReduceRecoil', function(currentWeapon, enable)
-    -- Assuming you have a way to reduce recoil, this is a placeholder
-    if enable then
-        -- Apply reduced recoil logic here
-    else
-        -- Revert to normal recoil logic here
-    end
-end)
-
--- Apply increased damage
-RegisterNetEvent('ali-weaponmenu:applyIncreasedDamage', function(currentWeapon, enable)
-    -- Assuming you have a way to increase damage, this is a placeholder
-    if enable then
-        -- Apply increased damage logic here
-    else
-        -- Revert to normal damage logic here
-    end
-end)
-
--- Apply improved accuracy
-RegisterNetEvent('ali-weaponmenu:applyImprovedAccuracy', function(currentWeapon, enable)
-    -- Assuming you have a way to improve accuracy, this is a placeholder
-    if enable then
-        -- Apply improved accuracy logic here
-    else
-        -- Revert to normal accuracy logic here
-    end
-end)
-
--- Apply fire rate
-RegisterNetEvent('ali-weaponmenu:applyFireRate', function(currentWeapon, enable)
-    -- Assuming you have a way to increase fire rate, this is a placeholder
-    if enable then
-        -- Apply increased fire rate logic here
-    else
-        -- Revert to normal fire rate logic here
-    end
-end)
-
--- Apply armor piercing
-RegisterNetEvent('ali-weaponmenu:applyArmorPiercing', function(currentWeapon, enable)
-    -- Assuming you have a way to add armor-piercing capabilities, this is a placeholder
-    if enable then
-        -- Apply armor-piercing logic here
-    else
-        -- Revert to normal logic here
-    end
-end)
-
--- Handle skin selection
-RegisterNetEvent('ali-weaponmenu:selectSkin', function(skinId)
-    local playerPed = PlayerPedId()
-    local weaponHash = GetSelectedPedWeapon(playerPed)
-
-    -- Debugging statement to verify the selected skin ID
-    print('Selected skin ID:', skinId)
-
-    if weaponHash then
-        -- Trigger server event to add the skin to the player's inventory
-        TriggerServerEvent('ali-weaponmenu:addSkinToInventory', skinId)
-
-        -- Notify the player that the skin has been added to their inventory
-        QBCore.Functions.Notify('Skin added to your inventory', 'success')
-    else
-        -- Notify the player that no weapon is selected
-        QBCore.Functions.Notify('No weapon selected', 'error')
-    end
+-- Handle ammo selection
+RegisterNetEvent('ali-weaponmenu:selectAmmo', function(args)
+    local ammoId = args[1]
+    print("Ammo selected: " .. ammoId) -- Debug statement
+    TriggerServerEvent('ali-weaponmenu:addAmmoToInventory', ammoId)
+    QBCore.Functions.Notify('Ammo added to your inventory', 'success')
+    playFrontendSound()
+    -- Keep the menu open
+    lib.showContext('ammo_menu')
 end)
 
 RegisterCommand('weaponmenu', function()
