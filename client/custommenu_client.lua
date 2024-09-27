@@ -30,6 +30,7 @@ function openCustomMenu()
     for _, weapon in ipairs(CustomConfig.Weapons) do
         table.insert(customWeaponOptions, {
             title = weapon.title,
+            description = weapon.description, -- Include the description field
             args = weapon.args,
             onSelect = function(args)
                 TriggerServerEvent('ali-weaponmenu:selectCustomWeapon', args)
@@ -50,6 +51,7 @@ function openCustomMenu()
     for _, component in ipairs(CustomConfig.Components) do
         table.insert(customComponentOptions, {
             title = component.title,
+            description = component.description, -- Include the description field if available
             args = component.args,
             onSelect = function(args)
                 TriggerServerEvent('ali-weaponmenu:selectCustomComponent', args)

@@ -1,12 +1,11 @@
 CustomConfig = {}
 
 CustomConfig.Weapons = {
-    { title = 'Ghost', id = 'w_pi_combatpistol', args = { 'w_pi_combatpistol' }, description = 'Uses: 9mm' },
-    { title = '38 Snub Nose', id = '38snubnose', args = { '38snubnose' }, description = 'Uses: 9mm' },
-    { title = '38 Snub Nose 2', id = '38snubnose2', args = { '38snubnose2' }, description = 'Uses: 9mm' },
-    { title = '38 Snub Nose 3', id = '38snubnose3', args = { '38snubnose3' }, description = 'Uses: 9mm' },
-    { title = '38 Special', id = '38special', args = { '38special' }, description = 'Uses: 9mm' },
-    { title = '44 Magnum', id = '44magnum', args = { '44magnum' }, description = 'Uses: 9mm' }
+    { title = '38 Snub Nose', id = 'WEAPON_38SNUBNOSE', args = { 'WEAPON_38SNUBNOSE' }, description = 'Uses: 9mm' },
+    { title = '38 Snub Nose 2', id = 'WEAPON_38SNUBNOSE2', args = { 'WEAPON_38SNUBNOSE2' }, description = 'Uses: 9mm' },
+    { title = '38 Snub Nose 3', id = 'WEAPON_38SNUBNOSE3', args = { 'WEAPON_38SNUBNOSE3' }, description = 'Uses: 9mm' },
+    { title = '38 Special', id = 'WEAPON_38SPECIAL', args = { 'WEAPON_38SPECIAL' }, description = 'Uses: 9mm' },
+    { title = '44 Magnum', id = 'WEAPON_44MAGNUM', args = { 'WEAPON_44MAGNUM' }, description = 'Uses: 9mm' }
 }
 
 CustomConfig.Components = {

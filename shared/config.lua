@@ -162,7 +162,7 @@ Config.Components = {
     { title = 'Squared Muzzle', id = 'at_muzzle_squared', args = { 'at_muzzle_squared' }, icon = 'fas fa-bolt', description = 'Reduces recoil. Works on: Rifles' },
     { title = 'Bell Muzzle', id = 'at_muzzle_bell', args = { 'at_muzzle_bell' }, icon = 'fas fa-bolt', description = 'Reduces recoil. Works on: Rifles' }
 }
-                                                                   
+
 Config.Modifications = {
     { title = 'Infinite Ammo - WIP dont use', id = 'infinite_ammo', args = { 'infinite_ammo' }, icon = 'fas fa-infinity' }
 }
