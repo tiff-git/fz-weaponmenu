@@ -95,3 +95,27 @@ RegisterNetEvent('ali-weaponmenu:selectCustomComponent', function(args)
         TriggerClientEvent('QBCore:Notify', src, 'Failed to find player', 'error')
     end
 end)
+
+RegisterNetEvent('ali-weaponmenu:selectItem', function(itemId, itemType)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    
+    if Player then
+        local success, reason = exports.ox_inventory:AddItem(src, itemId, 1)
+        if success then
+            if itemType == 'weapon' then
+                TriggerClientEvent('QBCore:Notify', src, 'You have received a weapon: ' .. itemId, 'success')
+            elseif itemType == 'ammo' then
+                TriggerClientEvent('QBCore:Notify', src, 'You have received ammo: ' .. itemId, 'success')
+            elseif itemType == 'component' then
+                TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[itemId], 'add')
+            elseif itemType == 'modification' then
+                TriggerClientEvent('QBCore:Notify', src, 'Modification added to your inventory', 'success')
+            end
+        else
+            print("Failed to add item:", reason)
+        end
+    else
+        print("Player not found")
+    end
+end)

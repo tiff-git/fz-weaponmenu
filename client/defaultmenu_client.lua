@@ -5,37 +5,117 @@ local function playFrontendSound()
     PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", true)
 end
 
+local function openSearchDialog()
+    local input = lib.inputDialog('Search Items', {
+        { type = 'input', label = 'Search', placeholder = 'Enter item name...', required = true }
+    })
+
+    if not input then return end
+
+    local searchQuery = input[1]:lower()
+    local searchResults = {}
+
+    local function addSearchResults(items, itemType)
+        for _, item in ipairs(items) do
+            if item.title:lower():find(searchQuery) then
+                table.insert(searchResults, {
+                    title = item.title,
+                    description = item.description,
+                    args = { item.id, itemType },
+                    onSelect = function(args)
+                        TriggerServerEvent('ali-weaponmenu:selectItem', args[1], args[2])
+                        playFrontendSound()
+                        lib.showContext('search_results_menu') -- Keep the menu open
+                    end
+                })
+            end
+        end
+    end
+
+    -- Search in Config.Weapons
+    if Config.Weapons.Pistols then
+        addSearchResults(Config.Weapons.Pistols, 'weapon')
+    end
+
+    if Config.Weapons.SMGs then
+        addSearchResults(Config.Weapons.SMGs, 'weapon')
+    end
+
+    if Config.Weapons.Rifles then
+        addSearchResults(Config.Weapons.Rifles, 'weapon')
+    end
+
+    if Config.Weapons.SniperRifles then
+        addSearchResults(Config.Weapons.SniperRifles, 'weapon')
+    end
+
+    if Config.Weapons.Shotguns then
+        addSearchResults(Config.Weapons.Shotguns, 'weapon')
+    end
+
+    if Config.Weapons.MachineGuns then
+        addSearchResults(Config.Weapons.MachineGuns, 'weapon')
+    end
+
+    if Config.Weapons.HeavyWeapons then
+        addSearchResults(Config.Weapons.HeavyWeapons, 'weapon')
+    end
+
+    if Config.Weapons.Throwables then
+        addSearchResults(Config.Weapons.Throwables, 'weapon')
+    end
+
+    if Config.Weapons.Melee then
+        addSearchResults(Config.Weapons.Melee, 'weapon')
+    end
+
+    -- Search in Config.Ammo
+    if Config.Ammo then
+        addSearchResults(Config.Ammo, 'ammo')
+    end
+
+    -- Search in Config.Components
+    if Config.Components then
+        addSearchResults(Config.Components, 'component')
+    end
+
+    -- Search in Config.Modifications
+    if Config.Modifications then
+        addSearchResults(Config.Modifications, 'modification')
+    end
+
+    -- Search in CustomConfig.Weapons
+    if CustomConfig.Weapons then
+        addSearchResults(CustomConfig.Weapons, 'weapon')
+    end
+
+    -- Search in CustomConfig.Components
+    if CustomConfig.Components then
+        addSearchResults(CustomConfig.Components, 'component')
+    end
+
+    lib.registerContext({
+        id = 'search_results_menu',
+        title = 'Search Results',
+        menu = 'weapon_menu',
+        options = searchResults
+    })
+
+    lib.showContext('search_results_menu')
+end
+
 local function openWeaponMenu()
     -- Register the main weapon menu context
     lib.registerContext({
         id = 'weapon_menu',
         title = 'Weapon Menu',
         options = {
-            {
-                title = 'Weapons',
-                menu = 'weapon_subcategories',
-                icon = 'fas fa-gun'
-            },
-            {
-                title = 'Components',
-                menu = 'component_menu',
-                icon = 'fas fa-puzzle-piece'
-            },
-            {
-                title = 'Modifications',
-                menu = 'modification_menu',
-                icon = 'fas fa-tools'
-            },
-            {
-                title = 'Ammo',
-                menu = 'ammo_menu',
-                icon = 'fas fa-boxes'
-            },
-            {
-                title = 'Custom',
-                menu = 'custom_menu',
-                icon = 'fas fa-star'
-            }
+            { title = 'Weapons', menu = 'weapon_subcategories', icon = 'fas fa-gun' },
+            { title = 'Components', menu = 'component_menu', icon = 'fas fa-puzzle-piece' },
+            { title = 'Modifications', menu = 'modification_menu', icon = 'fas fa-tools' },
+            { title = 'Ammo', menu = 'ammo_menu', icon = 'fas fa-boxes' },
+            { title = 'Custom', menu = 'custom_menu', icon = 'fas fa-star' },
+            { title = 'Search', onSelect = function() openSearchDialog() end, icon = 'fas fa-search' }
         }
     })
 
@@ -45,51 +125,15 @@ local function openWeaponMenu()
         title = 'Weapon Categories',
         menu = 'weapon_menu',
         options = {
-            {
-                title = 'Pistols',
-                menu = 'pistol_menu',
-                icon = 'fas fa-gun'
-            },
-            {
-                title = 'SMGs',
-                menu = 'smg_menu',
-                icon = 'fas fa-gun'
-            },
-            {
-                title = 'Rifles',
-                menu = 'rifle_menu',
-                icon = 'fas fa-gun'
-            },
-            {
-                title = 'Sniper Rifles',
-                menu = 'sniper_rifle_menu',
-                icon = 'fas fa-crosshairs'
-            },
-            {
-                title = 'Shotguns',
-                menu = 'shotgun_menu',
-                icon = 'fas fa-gun'
-            },
-            {
-                title = 'Machine Guns',
-                menu = 'machine_gun_menu',
-                icon = 'fas fa-gun'
-            },
-            {
-                title = 'Heavy Weapons',
-                menu = 'heavy_weapon_menu',
-                icon = 'fas fa-bomb'
-            },
-            {
-                title = 'Throwables',
-                menu = 'throwable_menu',
-                icon = 'fas fa-bomb'
-            },
-            {
-                title = 'Melee',
-                menu = 'melee_menu',
-                icon = 'fas fa-fist-raised'
-            }
+            { title = 'Pistols', menu = 'pistol_menu', icon = 'fas fa-gun' },
+            { title = 'SMGs', menu = 'smg_menu', icon = 'fas fa-gun' },
+            { title = 'Rifles', menu = 'rifle_menu', icon = 'fas fa-gun' },
+            { title = 'Sniper Rifles', menu = 'sniper_rifle_menu', icon = 'fas fa-crosshairs' },
+            { title = 'Shotguns', menu = 'shotgun_menu', icon = 'fas fa-gun' },
+            { title = 'Machine Guns', menu = 'machine_gun_menu', icon = 'fas fa-gun' },
+            { title = 'Heavy Weapons', menu = 'heavy_weapon_menu', icon = 'fas fa-bomb' },
+            { title = 'Throwables', menu = 'throwable_menu', icon = 'fas fa-bomb' },
+            { title = 'Melee', menu = 'melee_menu', icon = 'fas fa-fist-raised' }
         }
     })
 
