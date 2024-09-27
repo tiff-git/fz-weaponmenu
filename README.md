@@ -5,7 +5,7 @@
 
 # Ali's Weapon Menu
 
-Ali's Weapon Menu is a comprehensive weapon management system for GTA V, designed to enhance your gameplay experience by providing a user-friendly interface for weapon selection, modification, and ammo management.
+Ali's Weapon Menu is a comprehensive weapon management system for FiveM, designed to enhance your gameplay experience by providing a user-friendly interface for weapon selection, modification, and ammo management.
 
 ## Features
 
