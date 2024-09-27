@@ -23,7 +23,11 @@ local function openSearchDialog()
                     description = item.description,
                     args = { item.id, itemType },
                     onSelect = function(args)
-                        TriggerServerEvent('ali-weaponmenu:selectItem', args[1], args[2])
+                        if itemType == 'modification' then
+                            TriggerEvent('ali-weaponmenu:applyModification', args[1])
+                        else
+                            TriggerServerEvent('ali-weaponmenu:selectItem', args[1], args[2])
+                        end
                         playFrontendSound()
                         lib.showContext('search_results_menu') -- Keep the menu open
                     end
@@ -234,14 +238,15 @@ local function openWeaponMenu()
     for _, modification in ipairs(Config.Modifications) do
         table.insert(modificationOptions, {
             title = modification.title,
-            args = modification.args,
+            args = modification.id,  -- Ensure the correct argument is passed
             icon = modification.icon,
             description = modification.description,
             onSelect = function(args)
-                TriggerEvent('ali-weaponmenu:selectModification', args)
+                TriggerServerEvent('ali-weaponmenu:applyModification', args)
             end
         })
     end
+
     lib.registerContext({
         id = 'modification_menu',
         title = 'Modifications',

@@ -164,6 +164,6 @@ Config.Components = {
 }
 
 Config.Modifications = {
-    { title = 'Infinite Ammo - WIP dont use', id = 'infinite_ammo', args = { 'infinite_ammo' }, icon = 'fas fa-infinity' }
+    { title = 'Infinite Ammo', id = 'infinite_ammo', args = { 'infinite_ammo' }, icon = 'fas fa-infinity' }
 }
 

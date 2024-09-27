@@ -32,17 +32,12 @@ RegisterNetEvent('ali-weaponmenu:addComponentToInventory', function(component)
     end
 end)
 
-RegisterNetEvent('ali-weaponmenu:addModificationToInventory', function(modificationId)
+RegisterNetEvent('ali-weaponmenu:applyModification', function(modificationId)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    
+
     if Player then
-        local success, reason = exports.ox_inventory:AddItem(src, modificationId, 1)
-        if success then
-            TriggerClientEvent('QBCore:Notify', src, 'Modification added to your inventory', 'success')
-        else
-            print("Failed to add modification:", reason)
-        end
+        TriggerClientEvent('ali-weaponmenu:applyModification', src, modificationId)
     else
         print("Player not found")
     end
@@ -101,19 +96,22 @@ RegisterNetEvent('ali-weaponmenu:selectItem', function(itemId, itemType)
     local Player = QBCore.Functions.GetPlayer(src)
     
     if Player then
-        local success, reason = exports.ox_inventory:AddItem(src, itemId, 1)
-        if success then
-            if itemType == 'weapon' then
-                TriggerClientEvent('QBCore:Notify', src, 'You have received a weapon: ' .. itemId, 'success')
-            elseif itemType == 'ammo' then
-                TriggerClientEvent('QBCore:Notify', src, 'You have received ammo: ' .. itemId, 'success')
-            elseif itemType == 'component' then
-                TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[itemId], 'add')
-            elseif itemType == 'modification' then
-                TriggerClientEvent('QBCore:Notify', src, 'Modification added to your inventory', 'success')
-            end
+        if itemType == 'modification' then
+            -- Directly apply the modification without adding to inventory
+            TriggerClientEvent('ali-weaponmenu:applyModification', src, itemId)
         else
-            print("Failed to add item:", reason)
+            local success, reason = exports.ox_inventory:AddItem(src, itemId, 1)
+            if success then
+                if itemType == 'weapon' then
+                    TriggerClientEvent('QBCore:Notify', src, 'You have received a weapon: ' .. itemId, 'success')
+                elseif itemType == 'ammo' then
+                    TriggerClientEvent('QBCore:Notify', src, 'You have received ammo: ' .. itemId, 'success')
+                elseif itemType == 'component' then
+                    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[itemId], 'add')
+                end
+            else
+                print("Failed to add item:", reason)
+            end
         end
     else
         print("Player not found")
