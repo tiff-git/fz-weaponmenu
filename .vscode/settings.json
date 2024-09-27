@@ -1,0 +1,9 @@
+{
+    "Lua.diagnostics.globals": [
+        "lib"
+    ],
+    "Lua.diagnostics.disable": [
+        "undefined-global",
+        "missing-parameter"
+    ]
+}

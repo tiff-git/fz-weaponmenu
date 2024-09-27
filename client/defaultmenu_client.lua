@@ -1,47 +1,11 @@
 ---@diagnostic disable: unused-local
 local QBCore = exports['qb-core']:GetCoreObject()
 
-local function fetchWeaponData()
-    local weapons = exports['ox_inventory']:Items('weapon')
-    if type(weapons) ~= 'table' then
-        print("Error: Weapons data is not a table")
-        return {}
-    end
-
-    local categorizedWeapons = {
-        Pistols = {},
-        SMGs = {},
-        Rifles = {},
-        SniperRifles = {},
-        Shotguns = {},
-        MachineGuns = {},
-        HeavyWeapons = {},
-        Throwables = {},
-        Melee = {},
-        Custom = {}
-    }
-
-    for _, weapon in pairs(weapons) do
-        local category = weapon.category or 'Custom'
-        table.insert(categorizedWeapons[category], {
-            title = weapon.label,
-            id = weapon.name,
-            event = 'ali-weaponmenu:selectWeapon',
-            args = { weapon.name },
-            image = weapon.image or 'default_image_path.png'
-        })
-    end
-
-    return categorizedWeapons
-end
-
 local function playFrontendSound()
     PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", true)
 end
 
 local function openWeaponMenu()
-    local weaponData = fetchWeaponData()
-
     -- Register the main weapon menu context
     lib.registerContext({
         id = 'weapon_menu',
@@ -66,6 +30,11 @@ local function openWeaponMenu()
                 title = 'Ammo',
                 menu = 'ammo_menu',
                 icon = 'fas fa-boxes'
+            },
+            {
+                title = 'Custom',
+                menu = 'custom_menu',
+                icon = 'fas fa-star'
             }
         }
     })
@@ -120,11 +89,6 @@ local function openWeaponMenu()
                 title = 'Melee',
                 menu = 'melee_menu',
                 icon = 'fas fa-fist-raised'
-            },
-            {
-                title = 'Custom Weapons',
-                menu = 'custom_weapon_menu',
-                icon = 'fas fa-gun'
             }
         }
     })
@@ -201,83 +165,110 @@ local function openWeaponMenu()
         options = Config.Weapons.Melee
     })
 
-    -- Register the custom weapon menu context
-    lib.registerContext({
-        id = 'custom_weapon_menu',
-        title = 'Custom Weapons',
-        menu = 'weapon_subcategories',
-        options = Config.Weapons.Custom
-    })
-
     -- Register the component menu context
+    local componentOptions = {}
+    for _, component in ipairs(Config.Components) do
+        table.insert(componentOptions, {
+            title = component.title,
+            args = component.args,
+            icon = component.icon,
+            description = component.description,
+            onSelect = function(args)
+                TriggerEvent('ali-weaponmenu:selectComponent', args)
+            end
+        })
+    end
     lib.registerContext({
         id = 'component_menu',
         title = 'Components',
         menu = 'weapon_menu',
-        options = Config.Components
+        options = componentOptions
     })
 
     -- Register the modification menu context
+    local modificationOptions = {}
+    for _, modification in ipairs(Config.Modifications) do
+        table.insert(modificationOptions, {
+            title = modification.title,
+            args = modification.args,
+            icon = modification.icon,
+            description = modification.description,
+            onSelect = function(args)
+                TriggerEvent('ali-weaponmenu:selectModification', args)
+            end
+        })
+    end
     lib.registerContext({
         id = 'modification_menu',
         title = 'Modifications',
         menu = 'weapon_menu',
-        options = Config.Modifications
+        options = modificationOptions
     })
 
     -- Register the ammo menu context
+    local ammoOptions = {}
+    for _, ammo in ipairs(Config.Ammo) do
+        table.insert(ammoOptions, {
+            title = ammo.title,
+            args = ammo.args,
+            icon = ammo.icon,
+            description = ammo.description,
+            onSelect = function(args)
+                TriggerEvent('ali-weaponmenu:selectAmmo', args)
+                playFrontendSound()
+            end
+        })
+    end
     lib.registerContext({
         id = 'ammo_menu',
         title = 'Ammo',
         menu = 'weapon_menu',
-        options = Config.Ammo
+        options = ammoOptions
     })
+
+    -- Register the custom menu context
+    openCustomMenu()
 
     lib.showContext('weapon_menu')
 end
 
--- Handle weapon selection
-RegisterNetEvent('ali-weaponmenu:selectWeapon', function(args)
-    local weaponId = args[1]
-    print("Weapon selected: " .. weaponId) -- Debug statement
-    TriggerServerEvent('ali-weaponmenu:giveWeapon', weaponId)
-    playFrontendSound()
-    -- Keep the menu open
-    lib.showContext('weapon_subcategories')
-end)
+-- Update the weapon menu options to trigger the event
+for categoryName, category in pairs(Config.Weapons) do
+    for _, weapon in ipairs(category) do
+        weapon.onSelect = function(args)
+            TriggerEvent('ali-weaponmenu:selectWeapon', args, categoryName)
+        end
+    end
+end
 
 -- Handle component selection
 RegisterNetEvent('ali-weaponmenu:selectComponent', function(args)
     local componentId = args[1]
     local playerPed = PlayerPedId()
     local weaponHash = GetSelectedPedWeapon(playerPed)
-
     if weaponHash then
-        -- Add the component to the player's inventory
         TriggerServerEvent('ali-weaponmenu:addComponentToInventory', componentId)
+        GiveWeaponComponentToPed(playerPed, weaponHash, GetHashKey(componentId))
         QBCore.Functions.Notify('Component added to your inventory', 'success')
+        playFrontendSound()
+        lib.showContext('component_menu')
     else
         QBCore.Functions.Notify('No weapon selected', 'error')
+        lib.showContext('component_menu')
     end
-    playFrontendSound()
-    -- Keep the menu open
-    lib.showContext('component_menu')
 end)
 
 -- Handle modification selection
 RegisterNetEvent('ali-weaponmenu:selectModification', function(args)
     local modificationId = args[1]
     local playerPed = PlayerPedId()
-    local currentWeapon = GetSelectedPedWeapon(playerPed)
-    
-    if currentWeapon then
-        print("Modification selected: " .. modificationId .. " for weapon: " .. currentWeapon) -- Debug statement
-        if modificationId == 'infinite_ammo' then
-            SetPedInfiniteAmmoClip(playerPed, true)
-            QBCore.Functions.Notify('Modification applied: ' .. modificationId, 'success')
-        end
+    local weaponHash = GetSelectedPedWeapon(playerPed)
+    if weaponHash then
+        TriggerServerEvent('ali-weaponmenu:addModificationToInventory', modificationId)
+        GiveWeaponComponentToPed(playerPed, weaponHash, GetHashKey(modificationId))
+        QBCore.Functions.Notify('Modification added to your inventory', 'success')
     else
-        QBCore.Functions.Notify('No weapon in hand', 'error')
+        QBCore.Functions.Notify('No weapon selected', 'error')
     end
     playFrontendSound()
     lib.showContext('modification_menu')
@@ -285,13 +276,27 @@ end)
 
 -- Handle ammo selection
 RegisterNetEvent('ali-weaponmenu:selectAmmo', function(args)
-    local ammoId = args[1]
-    print("Ammo selected: " .. ammoId) -- Debug statement
-    TriggerServerEvent('ali-weaponmenu:addAmmoToInventory', ammoId)
-    QBCore.Functions.Notify('Ammo added to your inventory', 'success')
+    local ammoType = args[1]
+    local playerPed = PlayerPedId()
+    if ammoType and playerPed then
+        TriggerServerEvent('ali-weaponmenu:giveAmmo', ammoType, 10) -- Give 10 units of ammo
+        QBCore.Functions.Notify('Ammo added to your inventory', 'success')
+        playFrontendSound()
+        lib.showContext('ammo_menu')
+    else
+        QBCore.Functions.Notify('Failed to add ammo', 'error')
+        lib.showContext('ammo_menu')
+    end
+end)
+
+-- Handle default weapon selection
+RegisterNetEvent('ali-weaponmenu:selectWeapon', function(args)
+    local weaponId = args[1]
+    local playerPed = PlayerPedId()
+    TriggerServerEvent('ali-weaponmenu:selectWeapon', weaponId)
+    QBCore.Functions.Notify('Weapon added to your inventory', 'success')
     playFrontendSound()
-    -- Keep the menu open
-    lib.showContext('ammo_menu')
+    lib.showContext('weapon_menu')
 end)
 
 RegisterCommand('weaponmenu', function()
