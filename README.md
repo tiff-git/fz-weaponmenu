@@ -73,10 +73,9 @@ Ali's Weapon Menu is a comprehensive weapon management system for FiveM, designe
 
 ### Custom Configurations
 
-You can customize the available weapons and modifications by editing the following files:
+You can customize the available weapons with add ons of your choice by editing the following files:
 
 - **Weapons**: [`shared/custom_config.lua`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fd%3A%2FServers%2Fend-of-days%2FtxData%2FQboxLeanPack_9B6930.base%2Fresources%2F%5Bfaraway%5D%2Fali-weaponmenu%2Fshared%2Fcustom_config.lua%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%5D "d:\Servers\end-of-days\txData\QboxLeanPack_9B6930.base\resources\[faraway]\ali-weaponmenu\shared\custom_config.lua")
-- **Modifications**: [`shared/config.lua`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fd%3A%2FServers%2Fend-of-days%2FtxData%2FQboxLeanPack_9B6930.base%2Fresources%2F%5Bfaraway%5D%2Fali-weaponmenu%2Fshared%2Fconfig.lua%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%5D "d:\Servers\end-of-days\txData\QboxLeanPack_9B6930.base\resources\[faraway]\ali-weaponmenu\shared\config.lua")
 
 ### Example Configuration
 
@@ -84,9 +83,5 @@ You can customize the available weapons and modifications by editing the followi
 CustomConfig.Weapons = {
     { title = '38 Snub Nose', id = 'WEAPON_38SNUBNOSE', args = { 'WEAPON_38SNUBNOSE' }, description = 'Uses: 9mm' },
     { title = '44 Magnum', id = 'WEAPON_44MAGNUM', args = { 'WEAPON_44MAGNUM' }, description = 'Uses: 9mm' }
-}
-
-Config.Modifications = {
-    { title = 'Max Ammo', id = 'infinite_ammo', args = { 'infinite_ammo' }, icon = 'fas fa-bullseye', description = 'Apply infinite ammo to the weapon you are currently holding.' }
 }
 ```
