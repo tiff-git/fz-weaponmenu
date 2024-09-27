@@ -15,6 +15,12 @@ local function applyModification(modificationId)
         local maxAmmo = 9999
         local clipSize = GetMaxAmmoInClip(playerPed, weaponHash, true)
         
+        -- Ensure clipSize is a valid number
+        if type(clipSize) ~= 'number' then
+            TriggerEvent('QBCore:Notify', 'Failed to retrieve clip size', 'error')
+            return
+        end
+        
         -- Set the initial total ammo
         SetPedAmmo(playerPed, weaponHash, maxAmmo)
         
@@ -24,6 +30,12 @@ local function applyModification(modificationId)
                 Wait(50)
                 local currentAmmo = GetAmmoInPedWeapon(playerPed, weaponHash)
                 local currentClipAmmo = GetAmmoInClip(playerPed, weaponHash)
+                
+                -- Ensure currentClipAmmo is a valid number
+                if type(currentClipAmmo) ~= 'number' then
+                    TriggerEvent('QBCore:Notify', 'Failed to retrieve clip ammo', 'error')
+                    return
+                end
                 
                 -- Refill the clip if it's not full
                 if currentClipAmmo < clipSize then
