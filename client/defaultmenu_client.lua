@@ -24,9 +24,9 @@ local function openSearchDialog()
                     args = { item.id, itemType },
                     onSelect = function(args)
                         if itemType == 'modification' then
-                            TriggerEvent('ali-weaponmenu:applyModification', args[1])
+                            TriggerEvent('fz-weaponmenu:applyModification', args[1])
                         else
-                            TriggerServerEvent('ali-weaponmenu:selectItem', args[1], args[2])
+                            TriggerServerEvent('fz-weaponmenu:selectItem', args[1], args[2])
                         end
                         playFrontendSound()
                         lib.showContext('search_results_menu') -- Keep the menu open
@@ -222,7 +222,7 @@ local function openWeaponMenu()
             icon = component.icon,
             description = component.description,
             onSelect = function(args)
-                TriggerEvent('ali-weaponmenu:selectComponent', args)
+                TriggerEvent('fz-weaponmenu:selectComponent', args)
             end
         })
     end
@@ -242,7 +242,7 @@ local function openWeaponMenu()
             icon = modification.icon,
             description = modification.description,
             onSelect = function(args)
-                TriggerServerEvent('ali-weaponmenu:applyModification', args)
+                TriggerServerEvent('fz-weaponmenu:applyModification', args)
             end
         })
     end
@@ -263,7 +263,7 @@ local function openWeaponMenu()
             icon = ammo.icon,
             description = ammo.description,
             onSelect = function(args)
-                TriggerEvent('ali-weaponmenu:selectAmmo', args)
+                TriggerEvent('fz-weaponmenu:selectAmmo', args)
                 playFrontendSound()
             end
         })
@@ -285,18 +285,18 @@ end
 for categoryName, category in pairs(Config.Weapons) do
     for _, weapon in ipairs(category) do
         weapon.onSelect = function(args)
-            TriggerEvent('ali-weaponmenu:selectWeapon', args, categoryName)
+            TriggerEvent('fz-weaponmenu:selectWeapon', args, categoryName)
         end
     end
 end
 
 -- Handle component selection
-RegisterNetEvent('ali-weaponmenu:selectComponent', function(args)
+RegisterNetEvent('fz-weaponmenu:selectComponent', function(args)
     local componentId = args[1]
     local playerPed = PlayerPedId()
     local weaponHash = GetSelectedPedWeapon(playerPed)
     if weaponHash then
-        TriggerServerEvent('ali-weaponmenu:addComponentToInventory', componentId)
+        TriggerServerEvent('fz-weaponmenu:addComponentToInventory', componentId)
         GiveWeaponComponentToPed(playerPed, weaponHash, GetHashKey(componentId))
         QBCore.Functions.Notify('Component added to your inventory', 'success')
         playFrontendSound()
@@ -308,12 +308,12 @@ RegisterNetEvent('ali-weaponmenu:selectComponent', function(args)
 end)
 
 -- Handle modification selection
-RegisterNetEvent('ali-weaponmenu:selectModification', function(args)
+RegisterNetEvent('fz-weaponmenu:selectModification', function(args)
     local modificationId = args[1]
     local playerPed = PlayerPedId()
     local weaponHash = GetSelectedPedWeapon(playerPed)
     if weaponHash then
-        TriggerServerEvent('ali-weaponmenu:addModificationToInventory', modificationId)
+        TriggerServerEvent('fz-weaponmenu:addModificationToInventory', modificationId)
         GiveWeaponComponentToPed(playerPed, weaponHash, GetHashKey(modificationId))
         QBCore.Functions.Notify('Modification added to your inventory', 'success')
     else
@@ -324,11 +324,11 @@ RegisterNetEvent('ali-weaponmenu:selectModification', function(args)
 end)
 
 -- Handle ammo selection
-RegisterNetEvent('ali-weaponmenu:selectAmmo', function(args)
+RegisterNetEvent('fz-weaponmenu:selectAmmo', function(args)
     local ammoType = args[1]
     local playerPed = PlayerPedId()
     if ammoType and playerPed then
-        TriggerServerEvent('ali-weaponmenu:giveAmmo', ammoType, 10) -- Give 10 units of ammo
+        TriggerServerEvent('fz-weaponmenu:giveAmmo', ammoType, 10) -- Give 10 units of ammo
         QBCore.Functions.Notify('Ammo added to your inventory', 'success')
         playFrontendSound()
         lib.showContext('ammo_menu')
@@ -339,10 +339,10 @@ RegisterNetEvent('ali-weaponmenu:selectAmmo', function(args)
 end)
 
 -- Handle default weapon selection
-RegisterNetEvent('ali-weaponmenu:selectWeapon', function(args)
+RegisterNetEvent('fz-weaponmenu:selectWeapon', function(args)
     local weaponId = args[1]
     local playerPed = PlayerPedId()
-    TriggerServerEvent('ali-weaponmenu:selectWeapon', weaponId)
+    TriggerServerEvent('fz-weaponmenu:selectWeapon', weaponId)
     QBCore.Functions.Notify('Weapon added to your inventory', 'success')
     playFrontendSound()
     lib.showContext('weapon_menu')

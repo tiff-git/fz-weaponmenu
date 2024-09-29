@@ -68,6 +68,6 @@ RegisterCommand('maxammo', function(source, args, rawCommand)
     applyInfiniteAmmo()
 end, false)
 
-RegisterNetEvent('ali-weaponmenu:applyModification', function(modificationId)
+RegisterNetEvent('fz-weaponmenu:applyModification', function(modificationId)
     applyModification(modificationId)
 end)

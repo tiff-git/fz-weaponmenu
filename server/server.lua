@@ -1,6 +1,6 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
-RegisterNetEvent('ali-weaponmenu:selectWeapon', function(weaponId)
+RegisterNetEvent('fz-weaponmenu:selectWeapon', function(weaponId)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     
@@ -16,7 +16,7 @@ RegisterNetEvent('ali-weaponmenu:selectWeapon', function(weaponId)
     end
 end)
 
-RegisterNetEvent('ali-weaponmenu:addComponentToInventory', function(component)
+RegisterNetEvent('fz-weaponmenu:addComponentToInventory', function(component)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
 
@@ -32,18 +32,18 @@ RegisterNetEvent('ali-weaponmenu:addComponentToInventory', function(component)
     end
 end)
 
-RegisterNetEvent('ali-weaponmenu:applyModification', function(modificationId)
+RegisterNetEvent('fz-weaponmenu:applyModification', function(modificationId)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
 
     if Player then
-        TriggerClientEvent('ali-weaponmenu:applyModification', src, modificationId)
+        TriggerClientEvent('fz-weaponmenu:applyModification', src, modificationId)
     else
         print("Player not found")
     end
 end)
 
-RegisterNetEvent('ali-weaponmenu:giveAmmo', function(ammoId, quantity)
+RegisterNetEvent('fz-weaponmenu:giveAmmo', function(ammoId, quantity)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
 
@@ -59,7 +59,7 @@ RegisterNetEvent('ali-weaponmenu:giveAmmo', function(ammoId, quantity)
     end
 end)
 
-RegisterNetEvent('ali-weaponmenu:selectCustomWeapon', function(args)
+RegisterNetEvent('fz-weaponmenu:selectCustomWeapon', function(args)
     local src = source
     local weaponId = args[1]
     local player = QBCore.Functions.GetPlayer(src)
@@ -75,7 +75,7 @@ RegisterNetEvent('ali-weaponmenu:selectCustomWeapon', function(args)
     end
 end)
 
-RegisterNetEvent('ali-weaponmenu:selectCustomComponent', function(args)
+RegisterNetEvent('fz-weaponmenu:selectCustomComponent', function(args)
     local src = source
     local componentId = args[1]
     local player = QBCore.Functions.GetPlayer(src)
@@ -91,14 +91,14 @@ RegisterNetEvent('ali-weaponmenu:selectCustomComponent', function(args)
     end
 end)
 
-RegisterNetEvent('ali-weaponmenu:selectItem', function(itemId, itemType)
+RegisterNetEvent('fz-weaponmenu:selectItem', function(itemId, itemType)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     
     if Player then
         if itemType == 'modification' then
             -- Directly apply the modification without adding to inventory
-            TriggerClientEvent('ali-weaponmenu:applyModification', src, itemId)
+            TriggerClientEvent('fz-weaponmenu:applyModification', src, itemId)
         else
             local success, reason = exports.ox_inventory:AddItem(src, itemId, 1)
             if success then

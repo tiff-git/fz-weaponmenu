@@ -1,9 +1,8 @@
 fx_version 'cerulean'
 game 'gta5'
-
-author 'Alis Weapon Menu <3'
+author 'Faraway Development'
+description 'Weapon Menu'
 version '1.0.0'
-
 lua54 'yes'
 
 shared_scripts {

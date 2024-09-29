@@ -33,7 +33,7 @@ function openCustomMenu()
             description = weapon.description, -- Include the description field
             args = weapon.args,
             onSelect = function(args)
-                TriggerServerEvent('ali-weaponmenu:selectCustomWeapon', args)
+                TriggerServerEvent('fz-weaponmenu:selectCustomWeapon', args)
                 playFrontendSound()
                 lib.showContext('custom_weapon_menu') -- Keep the menu open
             end
@@ -54,7 +54,7 @@ function openCustomMenu()
             description = component.description, -- Include the description field if available
             args = component.args,
             onSelect = function(args)
-                TriggerServerEvent('ali-weaponmenu:selectCustomComponent', args)
+                TriggerServerEvent('fz-weaponmenu:selectCustomComponent', args)
                 playFrontendSound()
                 lib.showContext('custom_component_menu') -- Keep the menu open
             end

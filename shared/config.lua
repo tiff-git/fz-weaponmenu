@@ -164,6 +164,6 @@ Config.Components = {
 }
 
 Config.Modifications = {
-    { title = 'Max Ammo', id = 'infinite_ammo', args = { 'infinite_ammo' }, icon = 'fas fa-bullseye', description = 'Apply infinite ammo to the weapon you are currently holding.' }
+    { title = 'Max Ammo', id = 'infinite_ammo', args = { 'infinite_ammo' }, icon = 'fas fa-bullseye', description = 'Apply infinite ammo to the weapon you are currently holding. /maxammo' }
 }
 
