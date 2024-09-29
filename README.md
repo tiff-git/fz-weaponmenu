@@ -3,7 +3,7 @@
 ![image](https://github.com/user-attachments/assets/8b546126-4ee8-4f2d-8bdd-737d4d2e0627)
 ![image](https://github.com/user-attachments/assets/b166a8b3-ce2d-4820-8b9c-6eaedefe3be2)
 
-# Ali's Weapon Menu
+# Far Z Weapon Menu
 
 FZ Weapon Menu is a comprehensive weapon management system for FiveM, designed to enhance your gameplay experience by providing a user-friendly interface for weapon selection, modification, and ammo management.
 
